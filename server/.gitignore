@@ -1,1 +1,8 @@
+# python bytecode
+/__pycache__
+
+# virtual environment
 /venv
+
+# misc
+/datasets
