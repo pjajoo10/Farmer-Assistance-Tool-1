@@ -10,12 +10,7 @@ import {
   Form,
   Input,
   Row,
-  Col,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown
+  Col
 } from "reactstrap";
 
 function DiseaseDetection() {

@@ -1,10 +1,10 @@
 from flask import Flask, request, redirect, url_for
 import ml_utility
-# from flask_cors import CORS
+from flask_cors import CORS
 
 
 app = Flask(__name__, static_url_path='', static_folder='../client/build')
-# CORS(app)
+CORS(app)
 
 
 # landing page / login
@@ -25,10 +25,13 @@ def dashboard():
 
 
 # crop recommendation
-@app.route('/crop/recommend', methods=['POST'])
+@app.route('/user/crop_recommendation', methods=['GET','POST'])
 def recommend_crop():
-    x = [float(request.form.get(feature)) for feature in request.form]
+    print(request.json)
+    # x = [float(request.form.get(feature)) for feature in request.form]
+    x = list(request.json.values())
     model = ml_utility.CropRecommendation()
+    print(x)
     crop = model.recommend_crop(X=x) # 90, 42, 43, 20.879744, 82.002744, 6.502985, 202.935536
     return {"crop": crop}
 

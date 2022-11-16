@@ -1,4 +1,6 @@
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { Weatherservice } from "variables/Weatherservice";
 import {
   Button,
   Card,
@@ -14,6 +16,66 @@ import {
 } from "reactstrap";
 
 function CropRecommendation() {
+
+  const [nvalue,setNvalue] = useState();
+  const [pvalue,setPvalue] = useState();
+  const [kvalue,setKvalue] = useState();
+  const [phvalue,setPhvalue] = useState();
+  const [temp,setTemp] = useState();
+  const [rain,setRain] = useState();
+  const [humidity,setHumidity] = useState();
+  const [finalresp, setFinalresp] = useState("🪴")
+
+  const failureCallback = (callback) => {
+    console.log(callback);
+  }
+
+  useEffect(() => {
+    const weatherService = new Weatherservice();
+
+    if (window.navigator.geolocation) {
+        // Geolocation available
+        window.navigator.geolocation
+            .getCurrentPosition((geoLocation) => {
+                const locationData = {
+                    lat: geoLocation.coords.latitude,
+                    lon: geoLocation.coords.longitude
+                };
+
+                weatherService.getCurrentWeather(locationData).then((data) => {
+                    setHumidity(data.current.humidity);
+                    setTemp(data.current.temp);
+                });
+        
+                weatherService.getCurrentRainfall(locationData).then((data) => {
+                    console.log(data);
+                    setRain(data.data[0].precip);
+                    // setTemperature(data.current.temp);
+                });
+
+            }, failureCallback);
+
+    }
+    
+}, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const Croprecdata = {
+      Nvalue : nvalue,
+      Pvalue : pvalue,
+      Kvalue : kvalue,
+      Temp : temp,
+      Humidity : humidity,
+      PHvalue : phvalue,
+      Rain : rain
+    }
+    await axios.post('http://localhost:5000/user/crop_recommendation', JSON.stringify(Croprecdata), {headers: {'Content-Type': 'application/json'}})
+    .then((response) => {
+      setFinalresp(response.data.crop);
+    })
+  }
+
   return (
     <>
       <div className="content">
@@ -24,15 +86,16 @@ function CropRecommendation() {
                 <h5 className="title">Soil Contents</h5>
               </CardHeader>
               <CardBody>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                   <Row>
                     <Col className="pr-md-1" md="4">
                       <FormGroup>
                         <label>Nitrogen (N)</label>
                         <Input
-                          defaultValue="michael23"
                           placeholder="Nitrogen value"
                           type="number"
+                          onChange={e => setNvalue(e.target.value)}
+                          value={nvalue}
                         />
                       </FormGroup>
                     </Col>
@@ -40,9 +103,10 @@ function CropRecommendation() {
                       <FormGroup>
                         <label>Phosphorus (P)</label>
                         <Input
-                          defaultValue="michael23"
                           placeholder="Phosphorus value"
                           type="number"
+                          onChange={e => setPvalue(e.target.value)}
+                          value={pvalue}
                         />
                       </FormGroup>
                     </Col>
@@ -50,9 +114,10 @@ function CropRecommendation() {
                       <FormGroup>
                         <label>Potassium (K)</label>
                         <Input
-                          defaultValue="michael23"
                           placeholder="Potassium value"
                           type="number"
+                          onChange={e => setKvalue(e.target.value)}
+                          value={kvalue}
                         />
                       </FormGroup>
                     </Col>
@@ -64,6 +129,8 @@ function CropRecommendation() {
                         <Input
                           placeholder="PH value"
                           type="number"
+                          onChange={e => setPhvalue(e.target.value)}
+                          value={phvalue}
                         />
                       </FormGroup>
                     </Col>
@@ -73,11 +140,12 @@ function CropRecommendation() {
                   <Row>
                     <Col className="pr-md-1" md="4">
                       <FormGroup>
-                        <label>Temperature</label>
+                        <label>Temperature (C)</label>
                         <Input
-                          defaultValue="michael23"
-                          placeholder="Nitrogen value"
+                          placeholder="Temperature value"
                           type="number"
+                          onChange={e => setTemp(e.target.value)}
+                          value={temp}
                         />
                       </FormGroup>
                     </Col>
@@ -85,9 +153,10 @@ function CropRecommendation() {
                       <FormGroup>
                         <label>Humidity</label>
                         <Input
-                          defaultValue="michael23"
-                          placeholder="Phosphorus value"
+                          placeholder="Humidity value"
                           type="number"
+                          onChange={e => setHumidity(e.target.value)}
+                          value={humidity}
                         />
                       </FormGroup>
                     </Col>
@@ -95,19 +164,20 @@ function CropRecommendation() {
                       <FormGroup>
                         <label>Rainfall</label>
                         <Input
-                          defaultValue="michael23"
-                          placeholder="Potassium value"
+                          placeholder="Rainfall value"
                           type="number"
+                          onChange={e => setRain(e.target.value)}
+                          value={rain}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
-                </Form>
-              </CardBody>
-              <CardFooter>
                 <Button className="btn-fill" color="primary" type="submit">
                   Know your crop
                 </Button>
+                </Form>
+              </CardBody>
+              <CardFooter>
               </CardFooter>
             </Card>
           </Col>
@@ -123,9 +193,7 @@ function CropRecommendation() {
                     />
                     <h5 className="title">Crops You can grow :</h5>
                   <p className="description">
-                    <li>
-                      hi
-                    </li>
+                      {finalresp}
                   </p>
                 </div>
               </CardBody>
