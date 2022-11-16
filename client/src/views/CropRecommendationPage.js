@@ -24,7 +24,7 @@ function CropRecommendation() {
   const [temp,setTemp] = useState();
   const [rain,setRain] = useState();
   const [humidity,setHumidity] = useState();
-  const [finalresp, setFinalresp] = useState("🪴")
+  const [finalresp, setFinalresp] = useState(["🪴"])
 
   const failureCallback = (callback) => {
     console.log(callback);
@@ -72,6 +72,7 @@ function CropRecommendation() {
     }
     await axios.post('http://localhost:5000/user/crop_recommendation', JSON.stringify(Croprecdata), {headers: {'Content-Type': 'application/json'}})
     .then((response) => {
+      console.log(response.data.crop);
       setFinalresp(response.data.crop);
     })
   }
@@ -193,7 +194,11 @@ function CropRecommendation() {
                     />
                     <h5 className="title">Crops You can grow :</h5>
                   <p className="description">
-                      {finalresp}
+                      {finalresp.map((e) => {
+                        return(
+                            <p>{e}</p>
+                        )
+                      })}
                   </p>
                 </div>
               </CardBody>

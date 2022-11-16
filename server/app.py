@@ -36,8 +36,9 @@ def recommend_crop():
     return {"crop": crops}
 
 # disease prediction
-@app.route('/disease/predict', methods=['POST'])
+@app.route('/user/disease_detection', methods=['POST'])
 def predict_disease():
+    print(request.files)
     f = request.files['img']
     f.save("./uploads/test.jpg")
     model = ml_utility.DiseasePrediction()
