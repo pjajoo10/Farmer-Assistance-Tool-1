@@ -38,12 +38,14 @@ def recommend_crop():
 # disease prediction
 @app.route('/user/disease_detection', methods=['POST'])
 def predict_disease():
-    print(request.files)
+    # print(request.files)
     f = request.files['img']
     f.save("./uploads/test.jpg")
     model = ml_utility.DiseasePrediction()
     pred = model.predict_disease()
-    return {"file": f.filename, "pred": pred}
+    crop, disease = pred.split("___")
+    # print(crop, disease.replace("_", " "))
+    return {"crop": crop, "disease": disease.replace("_", " ")}
 
 if __name__ == "__main__":
     app.debug(debug=True)
