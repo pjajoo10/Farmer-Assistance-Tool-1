@@ -1,4 +1,5 @@
 import pickle
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -10,8 +11,11 @@ class CropRecommendation:
     def __init__(self):
         self.model = pickle.load(open("./MLmodels/crop-recommendation.pkl", "rb"))
     
-    def recommend_crop(self, X):
-        return self.model.predict([X])[0]
+    def recommend_crops(self, X):
+        pred = self.model.predict_proba([X])[0]
+        n = 2
+        top_n = np.argsort(pred)[:-n-1:-1]
+        return self.model.classes_[top_n]
 
 
 

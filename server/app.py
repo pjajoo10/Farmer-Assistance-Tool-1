@@ -32,8 +32,8 @@ def recommend_crop():
     x = list(request.json.values())
     model = ml_utility.CropRecommendation()
     print(x)
-    crop = model.recommend_crop(X=x) # 90, 42, 43, 20.879744, 82.002744, 6.502985, 202.935536
-    return {"crop": crop}
+    crops = model.recommend_crops(X=x).tolist() # 90, 42, 43, 20.879744, 82.002744, 6.502985, 202.935536
+    return {"crop": crops}
 
 # disease prediction
 @app.route('/disease/predict', methods=['POST'])
