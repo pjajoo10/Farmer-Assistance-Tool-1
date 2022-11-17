@@ -5,7 +5,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   CardText,
   Form,
   Row,
@@ -16,7 +15,7 @@ function DiseaseDetection() {
 
   const [inputimg, setInputimg] = useState();
   const [finalresp, setfinalresp] = useState([]);
-  const [crop, setCrop] = useState("crop");
+  const [crop, setCrop] = useState("CROP");
   const imageref = useRef(null);
 
   function useDisplayImage() {
@@ -112,10 +111,8 @@ function DiseaseDetection() {
                       src={require("assets/img/ladybug.png")}
                       style={{padding:0}}
                     />
-                    <h5 className="title">Your {crop} might be infected with :</h5>
-                  <p className="description">
-                    {finalresp.disease}
-                  </p>
+                    <h5 className="title">Your  <span style={{color: "#44dd46", fontWeight: "bold"}}>{crop}</span>  is :</h5>
+                    {finalresp.disease == "healthy" || finalresp.disease == null ? <p>{finalresp.diseaase}</p> : <p>infected with {finalresp.disease}</p>}
                 </div>
               </CardBody>
             </Card>
