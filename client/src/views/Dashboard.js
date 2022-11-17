@@ -86,25 +86,20 @@ function Dashboard() {
         
                 });
         
-                // weatherService.getCurrentRainfall(locationData).then((data) => {
-                //     console.log(data);
-                //     data.data.forEach(day => {
-                //         newRainfallChart.push(day.precip);
-                //         newRainfallLabels.push(day.valid_date);
-                //     });
+                weatherService.getCurrentRainfall(locationData).then((data) => {
+                    console.log(data);
+                    data.data.forEach(day => {
+                        newRainfallChart.push(day.precip);
+                        newRainfallLabels.push(day.valid_date);
+                    });
 
-                //     setRainfallChart(newRainfallChart);
-                //     setRainfallChartLabels(newRainfallLabels);
-                // });            
+                    setRainfallChart(newRainfallChart);
+                    setRainfallChartLabels(newRainfallLabels);
+                });            
 
             }, failureCallback);
 
     }
-
-    
-    // productService.getAirQuality().then((data) => {
-    //     console.log(data);
-    // });
 }, []);
 
 const tempData = {
@@ -120,6 +115,7 @@ const tempData = {
         },
         {
             label: 'Max Temp (in Celcius)',
+            fontColor: "white",
             data: tempChartMax,
             fill: false,
             backgroundColor: '#00bb7e',
@@ -170,6 +166,27 @@ const rainfallData = {
         }
     ]
 };
+const options = {
+  plugins: {  
+    legend: {
+      labels: {
+        color: "white",  
+      }
+    }
+  },
+  scales: {
+    x: {
+      ticks: {
+          color: "white"
+      }
+  },
+  y: {
+    ticks: {
+        color: "white"
+    }
+}
+  }
+};
 
   return (
     <>
@@ -188,9 +205,9 @@ const rainfallData = {
                 <div className="chart-area">
                 {
                   tempChartSelected !== 'today' ? (
-                      <Line data={tempData} />
+                      <Line data={tempData} options={options} />
                   ) : (
-                      <Line data={tempTodayData} />
+                      <Line data={tempTodayData} options={options} />
                   )
                 }
                 <div>
@@ -211,10 +228,6 @@ const rainfallData = {
                       className="mr-2 mb-2"
                     >This week</Button>
                   </div>
-                  {/* <Line
-                    data={chartExample1[bigChartData]}
-                    options={chartExample1.options}
-                  /> */}
                 </div>
               </CardBody>
             </Card>
@@ -230,6 +243,7 @@ const rainfallData = {
                 <div className="chart-area">
                   <Line
                     data={humidityData}
+                    options={options}
                   />
                 </div>
               </CardBody>
@@ -249,8 +263,9 @@ const rainfallData = {
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
-                  <Bar
+                  <Line
                     data={rainfallData}
+                    options={options}
                   />
                 </div>
               </CardBody>

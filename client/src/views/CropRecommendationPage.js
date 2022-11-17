@@ -14,7 +14,6 @@ import {
   Row,
   Col
 } from "reactstrap";
-import { error } from "jquery";
 
 function CropRecommendation() {
 
@@ -48,10 +47,10 @@ function CropRecommendation() {
                     setTemp(data.current.temp);
                 });
         
-                // weatherService.getCurrentRainfall(locationData).then((data) => {
-                //     console.log(data);
-                //     setRain(data.data[0].precip);
-                // });
+                weatherService.getCurrentRainfall(locationData).then((data) => {
+                    console.log(data);
+                    setRain(data.data[0].precip);
+                });
 
             }, failureCallback);
 
@@ -95,7 +94,12 @@ function CropRecommendation() {
                         <Input
                           placeholder="Nitrogen value"
                           type="number"
-                          onChange={e => setNvalue(e.target.value)}
+                          onChange={e => {
+                            if(Number(e.target.value) < 0){
+                              alert("Please enter a positive value")
+                            }
+                            else setNvalue(e.target.value);
+                          }}
                           value={nvalue}
                         />
                       </FormGroup>
@@ -106,7 +110,12 @@ function CropRecommendation() {
                         <Input
                           placeholder="Phosphorus value"
                           type="number"
-                          onChange={e => setPvalue(e.target.value)}
+                          onChange={e => {
+                            if(Number(e.target.value) < 0){
+                              alert("Please enter a positive value")
+                            }
+                            else setPvalue(e.target.value);
+                          }}
                           value={pvalue}
                         />
                       </FormGroup>
@@ -117,7 +126,12 @@ function CropRecommendation() {
                         <Input
                           placeholder="Potassium value"
                           type="number"
-                          onChange={e => setKvalue(e.target.value)}
+                          onChange={e => {
+                            if(Number(e.target.value) < 0){
+                              alert("Please enter a positive value")
+                            }
+                            else setKvalue(e.target.value);
+                          }}
                           value={kvalue}
                         />
                       </FormGroup>
@@ -132,7 +146,7 @@ function CropRecommendation() {
                           type="number"
                           onChange={e => {
                             if(Number(e.target.value) < 0 || Number(e.target.value) > 14){
-                              alert("Please ")
+                              alert("Please enter a number between 0 to 14 ")
                             }
                             else setPhvalue(e.target.value);
                           }}

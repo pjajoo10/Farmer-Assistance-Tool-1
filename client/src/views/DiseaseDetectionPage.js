@@ -64,7 +64,7 @@ function DiseaseDetection() {
                   <Row>
                     <Col className="pr-md-2" md="4">
                       <label style={{
-                        backgroundColor: "#2dce89",
+                        background: "linear-gradient(to top right, #0c6b42, white 170%)",
                         color: "white",
                         borderRadius: 6,
                         display: "inline-block",
@@ -111,9 +111,9 @@ function DiseaseDetection() {
                       src={require("assets/img/ladybug.png")}
                       style={{padding:0}}
                     />
-                    <h5 className="title">Your  <span style={{color: "#44dd46", fontWeight: "bold"}}>{crop}</span>  is :</h5>
-                    {finalresp.disease == "healthy" || finalresp.disease == null ? <p>{finalresp.diseaase}</p> : <p>infected with {finalresp.disease}</p>}
-                </div>
+                    <h5 className="title"><span style={{color: "#44dd46", fontWeight: "bold"}}>{crop}</span> health status :</h5>
+                    {finalresp.disease}
+                    </div>
               </CardBody>
             </Card>
           </Col>
