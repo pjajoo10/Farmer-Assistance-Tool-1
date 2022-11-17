@@ -15,13 +15,14 @@ import {
 function DiseaseDetection() {
 
   const [inputimg, setInputimg] = useState();
+  const [finalresp, setfinalresp] = useState([]);
+  const [crop, setCrop] = useState("crop");
   const imageref = useRef(null);
 
   function useDisplayImage() {
     const [result, setResult] = React.useState("");
 
     function uploader(e) {
-      console.log(e.target.files);
       const imageFile = e.target.files[0]
       setInputimg(imageFile);
       const reader = new FileReader();
@@ -36,12 +37,6 @@ function DiseaseDetection() {
   }
 
   const { result, uploader } = useDisplayImage();
-  
-  const removeImage = (id) => {
-    let images = inputimg.filter((item) => item.id !== id)
-    setInputimg(images);
-    console.log(inputimg)
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,7 +44,8 @@ function DiseaseDetection() {
     formData.append("img", inputimg);
     await axios.post('http://localhost:5000/user/disease_detection', formData, {headers: {'Content-Type': 'multipart/form-data'}})
     .then((response) => {
-      console.log(response.data);
+      setfinalresp(response.data);
+      setCrop(response.data.crop);
     })
 
   }
@@ -67,14 +63,17 @@ function DiseaseDetection() {
               <h5 className="title">Please upload a topview picture of your infected crop</h5>
                 <Form onSubmit={handleSubmit}>
                   <Row>
-                    <Col className="pr-md-1">
-                      <label className="lable-fill" style={{
+                    <Col className="pr-md-2" md="4">
+                      <label style={{
                         backgroundColor: "#2dce89",
                         color: "white",
                         borderRadius: 6,
                         display: "inline-block",
                         padding: "6px 12px",
-                        cursor: "pointer"
+                        cursor: "pointer",
+                        margin: "4px 1px",
+                        padding: 12,
+                        fontWeight: "bold"
                       }}>
                         <input type="file" style={{display: "none"}} onChange={(e) => {
                           setInputimg(e.target.files[0]);
@@ -82,11 +81,23 @@ function DiseaseDetection() {
                         }} />
                         Choose your crop image
                       </label>
-                      {result && <img ref={imageref} src={result} alt="" />}
+                    </Col>
+                    <Col className="pr-md-5">
+                        {inputimg ? <Button className="btn-fill" color="danger" type="submit">Detect disease</Button> : <Button className="btn-fill" color="danger" type="button" disabled>Detect disease</Button>} 
                     </Col>
                   </Row>
-                  {inputimg ? <Button className="btn-fill" color="danger" type="submit">Detect disease</Button> : <Button className="btn-fill" color="danger" type="button" disabled>Detect disease</Button>} 
                 </Form>
+                <Row>
+                      <Col className="pr-md-1">
+                      {result && <img ref={imageref} src={result} alt="" style={{
+                        height: 300,
+                        width: 425,
+                        borderRadius: 5,
+                        marginTop: 50,
+                        boxShadow: "0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19)"
+                      }}/>}
+                      </Col>
+                    </Row>
               </CardBody>
             </Card>
           </Col>
@@ -101,9 +112,9 @@ function DiseaseDetection() {
                       src={require("assets/img/ladybug.png")}
                       style={{padding:0}}
                     />
-                    <h5 className="title">Your crop might be infected with :</h5>
+                    <h5 className="title">Your {crop} might be infected with :</h5>
                   <p className="description">
-                    Typhoid
+                    {finalresp.disease}
                   </p>
                 </div>
               </CardBody>

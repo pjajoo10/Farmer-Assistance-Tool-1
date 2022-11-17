@@ -86,16 +86,16 @@ function Dashboard() {
         
                 });
         
-                weatherService.getCurrentRainfall(locationData).then((data) => {
-                    console.log(data);
-                    data.data.forEach(day => {
-                        newRainfallChart.push(day.precip);
-                        newRainfallLabels.push(day.valid_date);
-                    });
+                // weatherService.getCurrentRainfall(locationData).then((data) => {
+                //     console.log(data);
+                //     data.data.forEach(day => {
+                //         newRainfallChart.push(day.precip);
+                //         newRainfallLabels.push(day.valid_date);
+                //     });
 
-                    setRainfallChart(newRainfallChart);
-                    setRainfallChartLabels(newRainfallLabels);
-                });            
+                //     setRainfallChart(newRainfallChart);
+                //     setRainfallChartLabels(newRainfallLabels);
+                // });            
 
             }, failureCallback);
 
@@ -175,8 +175,8 @@ const rainfallData = {
     <>
       <div className="content">
         <Row>
-          <Col xs="2">
-            <Card className="card-chart" style={{height: 450, width: 600, padding: 20}}>
+          <Col className="pr-md-1" md="6">
+            <Card className="card-chart" style={{height: 400, width: 550, padding: 20}}>
               <CardHeader>
                 <Row>
                   <Col className="text-left" lg="8">
@@ -219,10 +219,8 @@ const rainfallData = {
               </CardBody>
             </Card>
           </Col>
-        </Row>
-        <Row>
-          <Col lg="4">
-            <Card className="card-chart" style={{height: 450, width: 600, padding: 20}}>
+          <Col className="pr-md-1" md="4">
+            <Card className="card-chart" style={{height: 400, width: 550, padding: 20}}>
               <CardHeader>
                 <CardTitle tag="h3">
                    Humidity Chart
@@ -239,8 +237,11 @@ const rainfallData = {
           </Col>
         </Row>
         <Row>
+          
+        </Row>
+        <Row>
         <Col lg="4">
-            <Card className="card-chart" style={{height: 450, width: 600, padding: 20}}>
+            <Card className="card-chart" style={{height: 400, width: 550, padding: 20}}>
               <CardHeader>
                 <CardTitle tag="h3">
                   Rainfall Chart

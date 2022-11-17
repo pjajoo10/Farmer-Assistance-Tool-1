@@ -34,12 +34,13 @@ def predict_disease():
 # price prediction
 @app.route('/user/price_prediction', methods=['POST'])
 def predict_price():
-    crop, date = request.json['crop'], request.json['date']
-    split_date = date.split("/")
-    x = [split_date[1], split_date[2]]
+    print(request.json)
+    crop, date = request.json['crop'].lower(), request.json['date']
+    split_date = date.split("-")
+    x = [split_date[1], split_date[0]]
     model = PricePrediction(crop)
     price, error = model.predict_price(X=x)
-    return {'price': price, 'error': error}
+    return {'low': price-error, 'high': price+error}
 
 
 if __name__ == "__main__":

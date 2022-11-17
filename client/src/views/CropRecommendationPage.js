@@ -14,6 +14,7 @@ import {
   Row,
   Col
 } from "reactstrap";
+import { error } from "jquery";
 
 function CropRecommendation() {
 
@@ -47,11 +48,10 @@ function CropRecommendation() {
                     setTemp(data.current.temp);
                 });
         
-                weatherService.getCurrentRainfall(locationData).then((data) => {
-                    console.log(data);
-                    setRain(data.data[0].precip);
-                    // setTemperature(data.current.temp);
-                });
+                // weatherService.getCurrentRainfall(locationData).then((data) => {
+                //     console.log(data);
+                //     setRain(data.data[0].precip);
+                // });
 
             }, failureCallback);
 
@@ -130,13 +130,18 @@ function CropRecommendation() {
                         <Input
                           placeholder="PH value"
                           type="number"
-                          onChange={e => setPhvalue(e.target.value)}
+                          onChange={e => {
+                            if(Number(e.target.value) < 0 || Number(e.target.value) > 14){
+                              alert("Please ")
+                            }
+                            else setPhvalue(e.target.value);
+                          }}
                           value={phvalue}
                         />
                       </FormGroup>
                     </Col>
                   </Row>
-                  <hr style={{backgroundColor: 'white' }}/>
+                  <hr style={{backgroundColor: 'white', marginBottom: 30, opacity: 0.5 }}/>
                   <h5 className="title">Weather Parameters</h5>
                   <Row>
                     <Col className="pr-md-1" md="4">
@@ -173,9 +178,11 @@ function CropRecommendation() {
                       </FormGroup>
                     </Col>
                   </Row>
-                <Button className="btn-fill" color="primary" type="submit">
+                  {nvalue && pvalue && kvalue && phvalue && temp && humidity && rain ? <Button className="btn-fill" type="submit" color="danger">
                   Know your crop
-                </Button>
+                </Button> : <Button className="btn-fill" color="danger" disabled>
+                  Know your crop
+                </Button>}
                 </Form>
               </CardBody>
               <CardFooter>
