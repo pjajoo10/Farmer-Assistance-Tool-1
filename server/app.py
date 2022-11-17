@@ -40,7 +40,7 @@ def predict_price():
     x = [split_date[1], split_date[0]]
     model = PricePrediction(crop)
     price, error = model.predict_price(X=x)
-    return {'low': price-error, 'high': price+error}
+    return {'low': round(price-error, 2), 'high': round(price+error, 2)}
 
 
 if __name__ == "__main__":
