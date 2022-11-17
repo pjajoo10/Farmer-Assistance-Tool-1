@@ -45,6 +45,7 @@ function DiseaseDetection() {
     .then((response) => {
       setfinalresp(response.data);
       setCrop(response.data.crop);
+    //   console.log(response.data.disease)
     })
 
   }
@@ -113,6 +114,7 @@ function DiseaseDetection() {
                     />
                     <h5 className="title">Your  <span style={{color: "#44dd46", fontWeight: "bold"}}>{crop}</span>  is :</h5>
                     {finalresp.disease == "healthy" || finalresp.disease == null ? <p>{finalresp.diseaase}</p> : <p>infected with {finalresp.disease}</p>}
+                    {/* {finalresp.disease != "healthy" && finalresp.disease != null ? <p>infected with {finalresp.disease}</p> : <p>{finalresp.diseaase}</p>} */}
                 </div>
               </CardBody>
             </Card>
