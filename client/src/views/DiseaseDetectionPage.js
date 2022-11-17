@@ -113,7 +113,7 @@ function DiseaseDetection() {
                       style={{padding:0}}
                     />
                     <h5 className="title"><span style={{color: "#44dd46", fontWeight: "bold"}}>{crop}</span> health status :</h5>
-                    {finalresp.disease}
+                    <p>{finalresp.disease}</p>
                     </div>
               </CardBody>
             </Card>
