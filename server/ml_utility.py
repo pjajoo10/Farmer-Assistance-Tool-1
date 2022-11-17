@@ -162,3 +162,24 @@ class DiseasePrediction:
         yb = self.model(xb)
         _, preds  = torch.max(yb, dim=1)
         return self.classes[preds[0]]
+
+
+
+# price prediction
+class PricePrediction:
+    price_errors = {
+        'cotton': 7.39,
+        'maize': 5.54,
+        'apple': 8.41,
+        'rice': 2.95,
+        'papaya': 5.4,
+        'moong': 5.16
+    }
+
+    def __init__(self, crop):
+        self.model = pickle.load(open(f"./MLmodels/wpi_{crop}.pkl", "rb"))
+        self.error = self.price_errors[crop]
+    
+    def predict_price(self, X):
+        pred = self.model.predict([X])[0]
+        return round(pred, 2), self.error
