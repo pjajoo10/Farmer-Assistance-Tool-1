@@ -45,6 +45,7 @@ function DiseaseDetection() {
     .then((response) => {
       setfinalresp(response.data);
       setCrop(response.data.crop);
+    //   console.log(response.data.disease)
     })
 
   }
