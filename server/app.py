@@ -28,7 +28,7 @@ def predict_disease():
     pred = model.predict_disease()
     crop, disease = pred.split("___")
     print(crop, disease.replace("_", " "))
-    return {"crop": crop, "disease": disease.replace("_", " ").strip()}
+    return {"crop": crop.replace("_", " ").strip(), "disease": disease.replace("_", " ").strip()}
 
 
 # price prediction
