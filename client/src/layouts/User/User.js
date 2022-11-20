@@ -90,7 +90,7 @@ function User(props) {
             <Sidebar
               routes={routes}
               logo={{
-                text: "Farm Assist",
+                text: "Cropido",
                 imgSrc: logo
               }}
               toggleSidebar={toggleSidebar}
