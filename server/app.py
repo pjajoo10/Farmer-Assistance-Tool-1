@@ -1,10 +1,10 @@
 from flask import Flask, request, redirect, url_for
 from ml_utility import CropRecommendation, DiseasePrediction, PricePrediction
-from flask_cors import CORS
+# from flask_cors import CORS
 
 
 app = Flask(__name__, static_url_path='', static_folder='../client/build')
-CORS(app)
+# CORS(app)
 
 
 # crop recommendation

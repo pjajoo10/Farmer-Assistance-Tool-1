@@ -109,8 +109,8 @@ const tempData = {
             label: 'Min Temp (in Celcius)',
             data: tempChartMin,
             fill: false,
-            backgroundColor: '#2f4860',
-            borderColor: '#2f4860',
+            backgroundColor: '#e14ec8',
+            borderColor: '#e14ec8',
             tension: .4
         },
         {
