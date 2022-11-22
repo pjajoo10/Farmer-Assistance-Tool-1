@@ -20,8 +20,8 @@ import {
 
 function PricePrediction() {
 
-  const deployURLstr = 'https://cropido.herokuapp.com';
-//   const localURLstr = 'http://localhost:5000';
+//   const deployURLstr = 'https://cropido.herokuapp.com';
+  const localURLstr = 'http://localhost:5000';
 
   const [dropName, setDropName] = useState("Choose your crop");
   const [date, setDate] = useState("");
@@ -33,7 +33,7 @@ function PricePrediction() {
       crop : dropName,
       date : date
     }
-    await axios.post(`${deployURLstr}/user/price_prediction`, JSON.stringify(data), {headers: {'Content-Type': 'application/json'}})
+    await axios.post(`${localURLstr}/user/price_prediction`, JSON.stringify(data), {headers: {'Content-Type': 'application/json'}})
     .then((response) => {
       console.log(response.data);
       SetFinalresp(response.data);

@@ -1,10 +1,10 @@
 from flask import Flask, request, redirect, url_for
 from ml_utility import CropRecommendation, DiseasePrediction, PricePrediction
-# from flask_cors import CORS
+from flask_cors import CORS
 
 
 app = Flask(__name__, static_url_path='', static_folder='../client/build')
-# CORS(app)
+CORS(app)
 
 
 # crop recommendation
@@ -37,7 +37,7 @@ def predict_price():
     print(request.json)
     crop, date = request.json['crop'].lower(), request.json['date']
     split_date = date.split("-")
-    x = [split_date[1], split_date[0]]
+    x = [int(split_date[1]), int(split_date[0])]
     model = PricePrediction(crop)
     price, error = model.predict_price(X=x)
     return {'low': round(price-error, 2), 'high': round(price+error, 2)}

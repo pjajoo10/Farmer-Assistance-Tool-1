@@ -132,8 +132,8 @@ const tempTodayData = {
             label: 'Temp (in Celcius)',
             data: tempChartToday,
             fill: false,
-            backgroundColor: '#2f4860',
-            borderColor: '#2f4860',
+            backgroundColor: '#fcba03',
+            borderColor: '#fcba03',
             tension: .4
         }
     ]
