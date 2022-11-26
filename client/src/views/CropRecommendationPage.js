@@ -17,8 +17,10 @@ import {
 
 function CropRecommendation() {
 
-//   const deployURLstr = 'https://cropido.herokuapp.com';
-  const localURLstr = 'http://localhost:5000';
+  // production
+  const URLstr = 'https://cropido-server.onrender.com';
+  // development
+//   const URLstr = 'http://localhost:5000';
 
   const [nvalue,setNvalue] = useState();
   const [pvalue,setPvalue] = useState();
@@ -72,7 +74,7 @@ function CropRecommendation() {
       PHvalue : phvalue,
       Rain : rain
     }
-    await axios.post(`${localURLstr}/user/crop_recommendation`, JSON.stringify(Croprecdata), {headers: {'Content-Type': 'application/json'}})
+    await axios.post(`${URLstr}/user/crop_recommendation`, JSON.stringify(Croprecdata), {headers: {'Content-Type': 'application/json'}})
     .then((response) => {
       console.log(response.data.crop);
       setFinalresp(response.data.crop);

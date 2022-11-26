@@ -13,8 +13,10 @@ import {
 
 function DiseaseDetection() {
 
-//   const deployURLstr = 'https://cropido.herokuapp.com';
-  const localURLstr = 'http://localhost:5000';
+  // production
+  const URLstr = 'https://cropido-server.onrender.com';
+  // development
+//   const URLstr = 'http://localhost:5000';
 
   const [inputimg, setInputimg] = useState();
   const [finalresp, setfinalresp] = useState([]);
@@ -44,7 +46,7 @@ function DiseaseDetection() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("img", inputimg);
-    await axios.post(`${localURLstr}/user/disease_detection`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+    await axios.post(`${URLstr}/user/disease_detection`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
     .then((response) => {
       setfinalresp(response.data);
       setCrop(response.data.crop);
