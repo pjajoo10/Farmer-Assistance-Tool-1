@@ -216,7 +216,7 @@ function CropRecommendation() {
                       className="avatar"
                       src={require("assets/img/Plantlogo.png")}
                     />
-                    <h5 className="title">Crops You can grow :</h5>
+                    <h5 className="title">Crops you can grow :</h5>
                   <p className="description">
                       {finalresp.map((e) => {
                         return(
