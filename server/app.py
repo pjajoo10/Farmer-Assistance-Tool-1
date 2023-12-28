@@ -10,10 +10,8 @@ CORS(app)
 # crop recommendation
 @app.route('/user/crop_recommendation', methods=['GET','POST'])
 def recommend_crop():
-    # print(request.json)
     x = list(request.json.values())
     model = CropRecommendation()
-    # print(x)
     crops = model.recommend_crops(X=x).tolist() # 90, 42, 43, 20.879744, 82.002744, 6.502985, 202.935536
     return {"crop": crops}
 
@@ -21,7 +19,6 @@ def recommend_crop():
 # disease prediction
 @app.route('/user/disease_detection', methods=['POST'])
 def predict_disease():
-    # print(request.files)
     f = request.files['img']
     f.save("./uploads/test.jpg")
     model = DiseasePrediction()
@@ -44,4 +41,4 @@ def predict_price():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
