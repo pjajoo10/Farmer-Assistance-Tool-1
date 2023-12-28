@@ -15,12 +15,9 @@ import {
   Col
 } from "reactstrap";
 
-function CropRecommendation() {
+const URLstr = process.env.REACT_APP_SERVER_URL;
 
-  // production
-  const URLstr = 'https://cropido-server.onrender.com';
-  // development
-//   const URLstr = 'http://localhost:5000';
+function CropRecommendation() {
 
   const [nvalue,setNvalue] = useState();
   const [pvalue,setPvalue] = useState();
